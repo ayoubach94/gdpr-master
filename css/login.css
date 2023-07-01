@@ -1,0 +1,17 @@
+.card-title {
+  padding-bottom: 12px;
+  font-size: 1.4em;
+}
+
+.card-body {
+  padding-bottom: 0.2rem !important;
+}
+
+.container-register {
+  width: 100%;
+  padding-left: 18px;
+}
+
+.card {
+  padding-bottom: 20px;
+}

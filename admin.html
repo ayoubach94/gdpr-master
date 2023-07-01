@@ -1,0 +1,253 @@
+<html>
+  <head>
+    <title>Demo Firebase</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/tool.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand text-white" id="label-user"></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-person-gear"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"
+                  />
+                </svg>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="profile.html">perfil</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="admin.html">encuesta</a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    onclick="closeSession()"
+                    >Cerrar sesión</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <h1 class="text-white text-center">Lista de Procedimientos Realizados</h1>
+      <br />
+      <div>
+        <button class="btn btn-primary" onClick="newProcedure()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-file-earmark-plus-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"
+            />
+          </svg>
+          Nuevo Procedimiento
+        </button>
+      </div>
+      <br />
+      <div id="container-collapse"></div>
+    </div>
+  </body>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.0/firebase-auth.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <script src="js/loader.js"></script>
+  <script src="  https://printjs-4de6.kxcdn.com/print.min.js"></script>
+  <script>
+    const $labelUser = $("#label-user");
+    const storedData = JSON.parse(localStorage.getItem("storedData"));
+    console.log(storedData);
+    if (!storedData) {
+      location.href = "index.html";
+    }
+
+    $labelUser.html(
+      `<b>Usuario:</b> ${storedData.nombre} ${storedData.apellidos}`,
+    );
+
+    $containerCollapse = $("#container-collapse");
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDmuyhFxbzkwvnCj9Ms_492nmoIbyMb1MI",
+      authDomain: "gpdr-73453.firebaseapp.com",
+      databaseURL:
+        "https://gpdr-73453-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "gpdr-73453",
+      storageBucket: "gpdr-73453.appspot.com",
+      messagingSenderId: "107562395512",
+      appId: "1:107562395512:web:9ddedf27cc5ad9cea80a8d",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const $loader = $(loader);
+    const $body = $("body");
+    const newProcedure = () => {
+      location.href = "tool.html";
+    };
+    $loader.prependTo($body);
+
+    const closeSession = () => {
+      if (confirm("¿Esta seguro que desea cerrar sesión?")) {
+        $loader.show();
+        firebase
+          .auth()
+          .signOut()
+          .then(function () {
+            localStorage.setItem("user", null);
+            location.href = "index.html";
+            $loader.hide();
+          })
+          .catch(function (error) {
+            console.error("Error signing out:", error);
+            $loader.hide();
+          });
+      }
+    };
+
+    firebase
+      .database()
+      .ref("/preguntas/")
+      .once("value")
+      .then(function (snapshot) {
+        const preguntas = snapshot.val();
+        firebase
+          .database()
+          .ref("/usuarios/" + storedData.uid + "/procedimientos/")
+          .once("value")
+          .then(function (snapshot) {
+            const procedimientos = snapshot.val();
+            const arrKeysP = Object.keys(procedimientos);
+
+            let collapses = "";
+
+            for (let i = 0; i < arrKeysP.length; i++) {
+              collapses += `
+                      <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree${i}" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree${i}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                              </svg>
+                              &nbsp;
+                              ${
+                                procedimientos[arrKeysP[i]].nombre_procedimiento
+                              }
+                            </button>
+                          </h2>
+                          <div id="panelsStayOpen-collapseThree${i}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                            <div class="accordion-body">
+                              <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Categoria Amenenaza</th>
+                                  <th scope="col">Tipo Amenaza</th>
+                                  <th scope="col">Objetivo</th>
+                                  <th scope="col">Dominio Control</th>
+                                  <th scope="col">Control</th>
+                                  <th scope="col">Norma</th>
+                                  <th scope="col">Coste</th>
+                                  <th scope="col">Personas Implicadas</th>
+                                  <th scope="col">Concepto Seguridad</th>
+                                  <th scope="col">Propiedades Seguridad Información</th>
+                                  <th scope="col">Capacidades Operativas</th>
+                                  <th scope="col">Pregunta</th>
+                                  <th scope="col">Recomendación</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                  `;
+              let html = "";
+              for (
+                let j = 0;
+                j < procedimientos[arrKeysP[i]].preguntas.length;
+                j++
+              ) {
+                const keyPregunta = procedimientos[arrKeysP[i]].preguntas[j];
+                console.log(
+                  "keyPregunta",
+                  preguntas[keyPregunta].dominio_control,
+                );
+                html += `
+                        <tr>
+                        <td>${preguntas[keyPregunta].categoria_amenaza_nombre}</td>
+                        <td>${preguntas[keyPregunta].tipo_amenaza_nombre}</td>
+                        <td>${preguntas[keyPregunta].tipo_control_nombre}</td>
+                        <td>${preguntas[keyPregunta].dominio_control}</td>
+                        <td>${preguntas[keyPregunta].control}</td>
+                        <td>${preguntas[keyPregunta].norma}</td>
+                        <td>${preguntas[keyPregunta].coste}</td>
+                        <td>${preguntas[keyPregunta].personas_implicadas}</td>
+                        <td>${preguntas[keyPregunta].concepto}</td>
+                        <td>${preguntas[keyPregunta].propiedades}</td>
+                        <td>${preguntas[keyPregunta].capacidades_operativas}</td>
+                        <td>${preguntas[keyPregunta].pregunta}</td>
+                        <td>${preguntas[keyPregunta].recomendacion}</td>
+                        </tr>
+                      `;
+              }
+              collapses += html;
+              collapses += `          
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div><br/>`;
+            }
+
+            $containerCollapse.html(collapses);
+          });
+      });
+  </script>
+</html>
