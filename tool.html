@@ -383,28 +383,39 @@
                 tiposAmenazasFiltered[key] = tiposAmenazas[key];
               }
             }
-
-            const arrKeysAF = Object.keys(tiposAmenazasFiltered);
-            for (let i = 0; i < arrKeysAF.length; i++) {
-              const key = arrKeysAF[i];
+            for (let i = 0; i < arrCategoriaAmenaza.length; i++) {
+              const keyCA = arrCategoriaAmenaza[i];
               html += `
-                <li class="list-group-item">
-                  <div class="form-check">
-                    <input
-                    type="checkbox"
-                    class="form-check-input"
-                    value="${key}"
-                    ${arrTipoAmenaza.includes(key) ? "checked" : null}
-                    onclick="checkTipoAmenaza(event)"
-                    />
-                    <label class="form-check-label"><b>${
-                      categoriasAmenazas[
-                        tiposAmenazasFiltered[key].categoria_amenaza_id
-                      ].nombre
-                    } </b>: ${tiposAmenazasFiltered[key].nombre}</label>
-                  </div>
-                </li>
+                      <li>
+                        <b>Categoria de Amenaza: ${categoriasAmenazas[keyCA].nombre}</b>
+                      </li>
               `;
+
+              const arrKeysAF = Object.keys(tiposAmenazasFiltered);
+              for (let j = 0; j < arrKeysAF.length; j++) {
+                const keyAF = arrKeysAF[j];
+
+                if (
+                  keyCA == tiposAmenazasFiltered[keyAF].categoria_amenaza_id
+                ) {
+                  html += `
+                    <li class="list-group-item">
+                      <div class="form-check">
+                        <input
+                        type="checkbox"
+                        class="form-check-input"
+                        value="${keyAF}"
+                        ${arrTipoAmenaza.includes(keyAF) ? "checked" : null}
+                        onclick="checkTipoAmenaza(event)"
+                        />
+                        <label class="form-check-label"> ${
+                          tiposAmenazasFiltered[keyAF].nombre
+                        }</label>
+                      </div>
+                    </li>
+                  `;
+                }
+              }
             }
 
             $containerTool.html(html);
@@ -431,25 +442,34 @@
               }
             }
 
-            const arrKeysCF = Object.keys(tiposControlesFiltered);
-            for (let i = 0; i < arrKeysCF.length; i++) {
-              const key = arrKeysCF[i];
+            for (let i = 0; i < arrTipoAmenaza.length; i++) {
+              const keyTA = arrTipoAmenaza[i];
               html += `
-                <li class="list-group-item">
-                  <div class="form-check">
-                    <input
-                    type="checkbox"
-                    class="form-check-input"
-                    value="${key}"
-                    onclick="checkTipoControl(event)"
-                    />
-                    <label class="form-check-label"><b>${
-                      tiposAmenazas[tiposControlesFiltered[key].tipo_amenaza_id]
-                        .nombre
-                    } </b>: ${tiposControlesFiltered[key].nombre}</label>
-                  </div>
-                </li>
+                      <li>
+                        <b>Tipo de Amenaza: ${tiposAmenazas[keyTA].nombre}</b>
+                      </li>
               `;
+
+              const arrKeysCF = Object.keys(tiposControlesFiltered);
+              for (let i = 0; i < arrKeysCF.length; i++) {
+                const keyFC = arrKeysCF[i];
+
+                if (keyTA == tiposControlesFiltered[keyFC].tipo_amenaza_id) {
+                  html += `
+                    <li class="list-group-item">
+                      <div class="form-check">
+                        <input
+                        type="checkbox"
+                        class="form-check-input"
+                        value="${keyFC}"
+                        onclick="checkTipoControl(event)"
+                        />
+                        <label class="form-check-label">${tiposControlesFiltered[keyFC].nombre}</label>
+                      </div>
+                    </li>
+                  `;
+                }
+              }
             }
 
             $containerTool.html(html);
@@ -512,27 +532,39 @@
               }
             }
 
-            const arrKeysAF = Object.keys(tiposAmenazasFiltered);
-            for (let i = 0; i < arrKeysAF.length; i++) {
-              const key = arrKeysAF[i];
+            for (let i = 0; i < arrCategoriaAmenaza.length; i++) {
+              const keyCA = arrCategoriaAmenaza[i];
               html += `
-                <li class="list-group-item">
-                  <div class="form-check">
-                    <input
-                    type="checkbox"
-                    class="form-check-input"
-                    value="${key}"
-                    ${arrTipoAmenaza.includes(key) ? "checked" : null}
-                    onclick="checkTipoAmenaza(event)"
-                    />
-                    <label class="form-check-label"><b>${
-                      categoriasAmenazas[
-                        tiposAmenazasFiltered[key].categoria_amenaza_id
-                      ].nombre
-                    } </b>: ${tiposAmenazasFiltered[key].nombre}</label>
-                  </div>
-                </li>
+                      <li>
+                        <b>Categoria de Amenaza: ${categoriasAmenazas[keyCA].nombre}</b>
+                      </li>
               `;
+
+              const arrKeysAF = Object.keys(tiposAmenazasFiltered);
+              for (let j = 0; j < arrKeysAF.length; j++) {
+                const keyAF = arrKeysAF[j];
+
+                if (
+                  keyCA == tiposAmenazasFiltered[keyAF].categoria_amenaza_id
+                ) {
+                  html += `
+                    <li class="list-group-item">
+                      <div class="form-check">
+                        <input
+                        type="checkbox"
+                        class="form-check-input"
+                        value="${keyAF}"
+                        ${arrTipoAmenaza.includes(keyAF) ? "checked" : null}
+                        onclick="checkTipoAmenaza(event)"
+                        />
+                        <label class="form-check-label"> ${
+                          tiposAmenazasFiltered[keyAF].nombre
+                        }</label>
+                      </div>
+                    </li>
+                  `;
+                }
+              }
             }
 
             $containerTool.html(html);
@@ -565,25 +597,34 @@
               }
             }
 
-            const arrKeysCF = Object.keys(tiposControlesFiltered);
-            for (let i = 0; i < arrKeysCF.length; i++) {
-              const key = arrKeysCF[i];
+            for (let i = 0; i < arrTipoAmenaza.length; i++) {
+              const keyTA = arrTipoAmenaza[i];
               html += `
-                <li class="list-group-item">
-                  <div class="form-check">
-                    <input
-                    type="checkbox"
-                    class="form-check-input"
-                    value="${key}"
-                    onclick="checkTipoControl(event)"
-                    />
-                    <label class="form-check-label"><b>${
-                      tiposAmenazas[tiposControlesFiltered[key].tipo_amenaza_id]
-                        .nombre
-                    } </b>: ${tiposControlesFiltered[key].nombre}</label>
-                  </div>
-                </li>
+                      <li>
+                        <b>Tipo de Amenaza: ${tiposAmenazas[keyTA].nombre}</b>
+                      </li>
               `;
+
+              const arrKeysCF = Object.keys(tiposControlesFiltered);
+              for (let i = 0; i < arrKeysCF.length; i++) {
+                const keyFC = arrKeysCF[i];
+
+                if (keyTA == tiposControlesFiltered[keyFC].tipo_amenaza_id) {
+                  html += `
+                    <li class="list-group-item">
+                      <div class="form-check">
+                        <input
+                        type="checkbox"
+                        class="form-check-input"
+                        value="${keyFC}"
+                        onclick="checkTipoControl(event)"
+                        />
+                        <label class="form-check-label"> ${tiposControlesFiltered[keyFC].nombre}</label>
+                      </div>
+                    </li>
+                  `;
+                }
+              }
             }
 
             $containerTool.html(html);

@@ -119,14 +119,13 @@
     $containerCollapse = $("#container-collapse");
 
     const firebaseConfig = {
-      apiKey: "AIzaSyDmuyhFxbzkwvnCj9Ms_492nmoIbyMb1MI",
-      authDomain: "gpdr-73453.firebaseapp.com",
-      databaseURL:
-        "https://gpdr-73453-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "gpdr-73453",
-      storageBucket: "gpdr-73453.appspot.com",
-      messagingSenderId: "107562395512",
-      appId: "1:107562395512:web:9ddedf27cc5ad9cea80a8d",
+      apiKey: "AIzaSyB_5M79yHsSird0OtXwwYzIouKWXJtO9ag",
+      authDomain: "gdpr-3f8a8.firebaseapp.com",
+      projectId: "gdpr-3f8a8",
+      storageBucket: "gdpr-3f8a8.appspot.com",
+      messagingSenderId: "350297644099",
+      appId: "1:350297644099:web:f340fb43acd008ad4d48f6",
+      measurementId: "G-58H1J6GH4W",
     };
     firebase.initializeApp(firebaseConfig);
     const $loader = $(loader);
@@ -154,24 +153,27 @@
       }
     };
 
-    firebase
-      .database()
-      .ref("/preguntas/")
-      .once("value")
-      .then(function (snapshot) {
-        const preguntas = snapshot.val();
-        firebase
-          .database()
-          .ref("/usuarios/" + storedData.uid + "/procedimientos/")
-          .once("value")
-          .then(function (snapshot) {
-            const procedimientos = snapshot.val();
-            const arrKeysP = Object.keys(procedimientos);
+    const listarProcedimientos = () => {
+      firebase
+        .database()
+        .ref("/preguntas/")
+        .once("value")
+        .then(function (snapshot) {
+          const preguntas = snapshot.val();
+          firebase
+            .database()
+            .ref("/usuarios/" + storedData.uid + "/procedimientos/")
+            .once("value")
+            .then(function (snapshot) {
+              const procedimientos = snapshot.val();
 
-            let collapses = "";
+              if (procedimientos) {
+                const arrKeysP = Object.keys(procedimientos);
 
-            for (let i = 0; i < arrKeysP.length; i++) {
-              collapses += `
+                let collapses = "";
+
+                for (let i = 0; i < arrKeysP.length; i++) {
+                  collapses += `
                       <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="headingOne">
@@ -188,6 +190,16 @@
                           </h2>
                           <div id="panelsStayOpen-collapseThree${i}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                             <div class="accordion-body">
+                              <div>
+                                <button
+                                onclick="eliminarProcedimiento('${
+                                  arrKeysP[i]
+                                }')"
+                                class="btn btn-danger">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"> <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/> <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/> </svg>
+                                Eliminar</button>
+                              </div>
                               <table class="table">
                               <thead>
                                 <tr>
@@ -208,18 +220,19 @@
                               </thead>
                               <tbody>
                   `;
-              let html = "";
-              for (
-                let j = 0;
-                j < procedimientos[arrKeysP[i]].preguntas.length;
-                j++
-              ) {
-                const keyPregunta = procedimientos[arrKeysP[i]].preguntas[j];
-                console.log(
-                  "keyPregunta",
-                  preguntas[keyPregunta].dominio_control,
-                );
-                html += `
+                  let html = "";
+                  for (
+                    let j = 0;
+                    j < procedimientos[arrKeysP[i]].preguntas.length;
+                    j++
+                  ) {
+                    const keyPregunta =
+                      procedimientos[arrKeysP[i]].preguntas[j];
+                    console.log(
+                      "keyPregunta",
+                      preguntas[keyPregunta].dominio_control,
+                    );
+                    html += `
                         <tr>
                         <td>${preguntas[keyPregunta].categoria_amenaza_nombre}</td>
                         <td>${preguntas[keyPregunta].tipo_amenaza_nombre}</td>
@@ -236,18 +249,39 @@
                         <td>${preguntas[keyPregunta].recomendacion}</td>
                         </tr>
                       `;
-              }
-              collapses += html;
-              collapses += `          
+                  }
+                  collapses += html;
+                  collapses += `
                             </tbody>
                           </table>
                         </div>
                       </div>
                     </div><br/>`;
-            }
+                }
+                $containerCollapse.html(collapses);
+              } else {
+                $containerCollapse.html("");
+              }
+            });
+        });
+    };
 
-            $containerCollapse.html(collapses);
-          });
-      });
+    listarProcedimientos();
+
+    const eliminarProcedimiento = (procedimientoId) => {
+      if (confirm("¿Desea eliminar el procedimiento?")) {
+        console.log(true);
+        $loader.show();
+        const refId = firebase
+          .database()
+          .ref(`usuarios/${storedData.uid}/procedimientos`)
+          .child(procedimientoId);
+        refId.remove().then(function (res) {
+          console.log(res);
+          listarProcedimientos();
+          $loader.hide();
+        });
+      }
+    };
   </script>
 </html>
