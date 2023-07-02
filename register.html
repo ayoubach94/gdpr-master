@@ -117,6 +117,7 @@
   ></script>
   <script src="js/loader.js"></script>
   <script>
+    /*Configuracion de firebase*/
     const firebaseConfig = {
       apiKey: "AIzaSyB_5M79yHsSird0OtXwwYzIouKWXJtO9ag",
       authDomain: "gdpr-3f8a8.firebaseapp.com",
@@ -128,6 +129,7 @@
     };
     firebase.initializeApp(firebaseConfig);
 
+    /*Declaracion de variables*/
     const $alert = $("#alert");
     const $alertSuccess = $("#alert-success");
     const $loader = $(loader);
@@ -144,14 +146,17 @@
     $alertSuccess.hide();
     $loader.hide();
 
+    /*FUncion para cerrar alerta*/
     const closeAlert = () => {
       $alert.hide();
     };
 
+    /*Funcion para cerrar alerta exitosa*/
     const closeAlertSuccess = () => {
       $alert.hide();
     };
 
+    /*Funcion para registrar usuario*/
     const register = () => {
       const email = $email.val();
       const password = $password.val();

@@ -146,6 +146,7 @@
       `<b>Usuario:</b> ${storedData.nombre} ${storedData.apellidos}`,
     );
 
+    /*Configuracion de firebase*/
     const firebaseConfig = {
       apiKey: "AIzaSyB_5M79yHsSird0OtXwwYzIouKWXJtO9ag",
       authDomain: "gdpr-3f8a8.firebaseapp.com",
@@ -157,6 +158,7 @@
     };
     firebase.initializeApp(firebaseConfig);
 
+    /*Funcion para salir de sesion*/
     const closeSession = () => {
       if (confirm("¿Esta seguro que desea cerrar sesión?")) {
         firebase
@@ -172,6 +174,7 @@
       }
     };
 
+    /*Declarar variables*/
     const $containerTool = $("#container-tool");
     const $titleStep = $("#title-step");
     const $previous = $("#previous");
@@ -202,6 +205,7 @@
 
     const guardarPreguntas = [];
 
+    /*Objeto para definir los pasos de la encuesta*/
     let step = 1;
     let steps = [
       {
@@ -236,6 +240,7 @@
 
     $titleStep.text(getTitleStep(step));
 
+    /*Listar categoria de amenaza*/
     firebase
       .database()
       .ref("/categoria_amenaza/")
@@ -267,6 +272,7 @@
         $containerTool.html(html);
       });
 
+    /*Seleccionar categoria de amenaza*/
     const checkCategoriaAmenaza = (e) => {
       if (e.target.checked) {
         arrCategoriaAmenaza.push(e.target.value);
@@ -278,6 +284,7 @@
       }
     };
 
+    /*Seleccionar tipo de amenaza*/
     const checkTipoAmenaza = (e) => {
       if (e.target.checked) {
         arrTipoAmenaza.push(e.target.value);
@@ -289,6 +296,7 @@
       }
     };
 
+    /*Seleccionar tipo de control*/
     const checkTipoControl = (e) => {
       if (e.target.checked) {
         arrTipoControl.push(e.target.value);
@@ -300,11 +308,13 @@
       }
     };
 
+    /*Seleccionar tipo de resultado*/
     const checkTipoResultado = (e) => {
       tipoResultado = e.target.value;
       console.log(tipoResultado);
     };
 
+    /*Seleccionar preguntar*/
     const checkPregunta = (e, flag) => {
       if (flag === "no") {
         notArrPreguntas.push(e.target.value);
@@ -317,10 +327,12 @@
       console.log("arr preguntas =>", notArrPreguntas);
     };
 
+    /*Cerrar alerta*/
     const closeAlert = () => {
       $alert.hide();
     };
 
+    /*Funcion para ir hacia un paso atras*/
     const previous = () => {
       step--;
       $titleStep.text(getTitleStep(step));
@@ -477,6 +489,7 @@
       }
     };
 
+    /*Funcion para ir un paso hacia adelante*/
     const next = () => {
       let html = ``;
 
@@ -807,10 +820,12 @@
       }
     };
 
+    /*Funcion para regresar al admin*/
     const regresar = () => {
       location.href = "admin.html";
     };
 
+    /*Funcion para finaliar la encuesta*/
     const finish = () => {
       firebase
         .database()

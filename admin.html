@@ -117,7 +117,7 @@
     );
 
     $containerCollapse = $("#container-collapse");
-
+    /*configuracion firebase*/
     const firebaseConfig = {
       apiKey: "AIzaSyB_5M79yHsSird0OtXwwYzIouKWXJtO9ag",
       authDomain: "gdpr-3f8a8.firebaseapp.com",
@@ -135,6 +135,7 @@
     };
     $loader.prependTo($body);
 
+    /*Funcion para cerrar sesion*/
     const closeSession = () => {
       if (confirm("¿Esta seguro que desea cerrar sesión?")) {
         $loader.show();
@@ -153,6 +154,7 @@
       }
     };
 
+    /*Funcion para listar procedimientos*/
     const listarProcedimientos = () => {
       firebase
         .database()
@@ -268,6 +270,7 @@
 
     listarProcedimientos();
 
+    /*Funcion para eliminar procedimientos*/
     const eliminarProcedimiento = (procedimientoId) => {
       if (confirm("¿Desea eliminar el procedimiento?")) {
         console.log(true);
